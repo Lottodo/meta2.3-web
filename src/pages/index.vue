@@ -1,8 +1,10 @@
 <template>
   <v-container class="pa-8">
     <v-row>
-      <v-col cols="12">
-        <h1 class="text-h3 mb-6 text-center">🎬 Buscador de Películas</h1>
+      <v-col cols="12" class="d-flex align-center justify-space-between">
+        <h1 class="text-h3 mb-6">🎬 Buscador de Películas</h1>
+        
+        <v-btn variant="outlined" to="/about">About</v-btn>
       </v-col>
     </v-row>
 
