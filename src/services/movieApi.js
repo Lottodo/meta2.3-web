@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const API_KEY = 'tu_api_key_aqui' // Reemplaza con tu API key
+
+const API_KEY = import.meta.env.VITE_OMDB_API_KEY
+
+
 const BASE_URL = 'https://www.omdbapi.com/'
 
 const api = axios.create({

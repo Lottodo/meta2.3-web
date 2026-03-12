@@ -1,36 +1,46 @@
 <template>
-  <v-card class="mt-4">
-    <v-card-title class="d-flex align-center justify-space-between">
-      <span>{{ movie.Title }} ({{ movie.Year }})</span>
-      <v-btn icon="mdi-close" variant="text" @click="$emit('close-details')" />
-    </v-card-title>
-
-    <v-card-text>
+  <v-dialog max-width="900" :model-value="!!movie" @update:model-value="handleClose">
+    <v-card v-if="movie" class="pa-4" elevation="6">
       <v-row>
-        <v-col cols="12" sm="4">
+        <v-col cols="12" md="4">
           <v-img
-            rounded="lg"
-            :src="movie.Poster !== 'N/A' ? movie.Poster : 'https://placehold.co/300x445?text=No+Image'"
+            cover
+            height="400"
+            :src="movie.Poster !== 'N/A' ? movie.Poster : 'https://placehold.co/600x400?text=No+imagen'"
           />
         </v-col>
-        <v-col cols="12" sm="8">
-          <p class="mb-2"><strong>Director:</strong> {{ movie.Director }}</p>
-          <p class="mb-2"><strong>Genre:</strong> {{ movie.Genre }}</p>
-          <p class="mb-2"><strong>Runtime:</strong> {{ movie.Runtime }}</p>
-          <p class="mb-2"><strong>Rating:</strong> {{ movie.imdbRating }} / 10</p>
-          <p class="mt-4 text-body-2">{{ movie.Plot }}</p>
+
+        <v-col cols="12" md="8">
+          <v-card-title>{{ movie.Title }}</v-card-title>
+          <v-card-subtitle>{{ movie.Year }} • {{ movie.Genre }}</v-card-subtitle>
+          <v-card-text class="mt-4">
+            <p><strong>Director:</strong> {{ movie.Director }}</p>
+            <p><strong>Actores:</strong> {{ movie.Actors }}</p>
+            <p><strong>Duración:</strong> {{ movie.Runtime }}</p>
+            <p><strong>Sinopsis:</strong> {{ movie.Plot }}</p>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn color="error" variant="elevated" @click="emit('close-details')">Cerrar</v-btn>
+          </v-card-actions>
         </v-col>
       </v-row>
-    </v-card-text>
-  </v-card>
+    </v-card>
+  </v-dialog>
 </template>
 
-<script setup lang="ts">
-  defineProps<{
-    movie: Record<string, string>
-  }>()
+<script setup>
+  defineProps({
+    movie: {
+      type: Object,
+      default: null,
+    },
+  })
+  const emit = defineEmits(['close-details'])
 
-  defineEmits<{
-    'close-details': []
-  }>()
+  function handleClose (value) {
+    if (!value) {
+      emit('close-details')
+    }
+  }
 </script>
